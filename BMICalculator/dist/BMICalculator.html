@@ -1,0 +1,47 @@
+<html><head>
+  <SCRIPT src="http://java.com/js/dtjava.js"></SCRIPT>
+<script>
+    function launchApplication(jnlpfile) {
+        dtjava.launch(            {
+                url : 'BMICalculator.jnlp',
+                jnlp_content : 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGpubHAgc3BlYz0iMS4wIiB4bWxuczpqZng9Imh0dHA6Ly9qYXZhZnguY29tIiBocmVmPSJCTUlDYWxjdWxhdG9yLmpubHAiPgogIDxpbmZvcm1hdGlvbj4KICAgIDx0aXRsZT5CTUlDYWxjdWxhdG9yPC90aXRsZT4KICAgIDx2ZW5kb3I+a2FhPC92ZW5kb3I+CiAgICA8ZGVzY3JpcHRpb24+bnVsbDwvZGVzY3JpcHRpb24+CiAgICA8b2ZmbGluZS1hbGxvd2VkLz4KICA8L2luZm9ybWF0aW9uPgogIDxyZXNvdXJjZXM+CiAgICA8ajJzZSB2ZXJzaW9uPSIxLjYrIiBqYXZhLXZtLWFyZ3M9Ii1zcGxhc2g6c3JjL2ltYWdlcy9zcGxhc2gucG5nICIgIGhyZWY9Imh0dHA6Ly9qYXZhLnN1bi5jb20vcHJvZHVjdHMvYXV0b2RsL2oyc2UiLz4KICAgIDxqYXIgaHJlZj0iQk1JQ2FsY3VsYXRvci5qYXIiIHNpemU9IjIyNjY0IiBkb3dubG9hZD0iZWFnZXIiIC8+CiAgPC9yZXNvdXJjZXM+CiAgPGpmeDpqYXZhZngtZGVzYyAgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIG1haW4tY2xhc3M9ImJtaWNhbGN1bGF0b3IuU3BsYXNoIiAgbmFtZT0iQk1JQ2FsY3VsYXRvciIgLz4KICA8dXBkYXRlIGNoZWNrPSJhbHdheXMiLz4KPC9qbmxwPgo='
+            },
+            {
+                javafx : '8.0+',
+                jvmargs : '-splash:src/images/splash.png '
+            },
+            {}
+        );
+        return false;
+    }
+</script>
+
+<script>
+    function javafxEmbedbmicalculator() {
+        dtjava.embed(
+            {
+                id : 'bmicalculator',
+                url : 'BMICalculator.jnlp',
+                placeholder : 'javafx-app-placeholder',
+                width : '800',
+                height : '600',
+                jnlp_content : 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGpubHAgc3BlYz0iMS4wIiB4bWxuczpqZng9Imh0dHA6Ly9qYXZhZnguY29tIiBocmVmPSJCTUlDYWxjdWxhdG9yLmpubHAiPgogIDxpbmZvcm1hdGlvbj4KICAgIDx0aXRsZT5CTUlDYWxjdWxhdG9yPC90aXRsZT4KICAgIDx2ZW5kb3I+a2FhPC92ZW5kb3I+CiAgICA8ZGVzY3JpcHRpb24+bnVsbDwvZGVzY3JpcHRpb24+CiAgICA8b2ZmbGluZS1hbGxvd2VkLz4KICA8L2luZm9ybWF0aW9uPgogIDxyZXNvdXJjZXM+CiAgICA8ajJzZSB2ZXJzaW9uPSIxLjYrIiBqYXZhLXZtLWFyZ3M9Ii1zcGxhc2g6c3JjL2ltYWdlcy9zcGxhc2gucG5nICIgIGhyZWY9Imh0dHA6Ly9qYXZhLnN1bi5jb20vcHJvZHVjdHMvYXV0b2RsL2oyc2UiLz4KICAgIDxqYXIgaHJlZj0iQk1JQ2FsY3VsYXRvci5qYXIiIHNpemU9IjIyNjY0IiBkb3dubG9hZD0iZWFnZXIiIC8+CiAgPC9yZXNvdXJjZXM+CiAgPGpmeDpqYXZhZngtZGVzYyAgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIG1haW4tY2xhc3M9ImJtaWNhbGN1bGF0b3IuU3BsYXNoIiAgbmFtZT0iQk1JQ2FsY3VsYXRvciIgLz4KICA8dXBkYXRlIGNoZWNrPSJhbHdheXMiLz4KPC9qbmxwPgo='
+            },
+            {
+                javafx : '8.0+',
+                jvmargs : '-splash:src/images/splash.png '
+            },
+            {}
+        );
+    }
+    <!-- Embed FX application into web page once page is loaded -->
+    dtjava.addOnloadCallback(javafxEmbedbmicalculator);
+</script>
+
+</head><body>
+<h2>Test page for <b>BMICalculator</b></h2>
+  <b>Webstart:</b> <a href='BMICalculator.jnlp' onclick="return launchApplication('BMICalculator.jnlp');">click to launch this app as webstart</a><br><hr><br>
+
+  <!-- Applet will be inserted here -->
+  <div id='javafx-app-placeholder'></div>
+</body></html>
