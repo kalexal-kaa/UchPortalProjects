@@ -1,5 +1,10 @@
-.button{
+#inspectButton{
     -fx-background-color: cornflowerblue;
+}
+#scipButton{
+    -fx-background-color: red;
+}
+.button{
     -fx-text-fill: white;
 }
 .button:hover{
