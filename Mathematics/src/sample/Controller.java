@@ -1,12 +1,11 @@
 package sample;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.*;
 import java.text.SimpleDateFormat;
-import java.io.File;
-import java.io.FileWriter;
+
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -71,7 +70,7 @@ public class Controller implements Initializable {
         try {
             us = Integer.parseInt(this.tf.getText());
         } catch (NumberFormatException e) {
-            toast.setMessage("введите целое число");
+            toast.setMessage("введите ответ");
             this.tf.requestFocus();
             return;
         }
@@ -166,26 +165,33 @@ public class Controller implements Initializable {
 
     @FXML
     private void showResultAction() {
-        this.s = this.label.getText();
-        this.tf.setText(this.generator.result + "");
-        if (this.cb.isSelected()) {
-            final String s = type;
-            int n = -1;
-            switch (s.hashCode()) {
-                case 463370811:
-                    if (s.equals("примеры")) {
-                        n = 0;
+        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Взять подсказку");
+        alert.setHeaderText("");
+        alert.setContentText("Вы действительно хотите взять подсказку?");
+        final Optional<ButtonType> resultAlert =  alert.showAndWait();
+        if (resultAlert.get() == ButtonType.OK) {
+            this.s = this.label.getText();
+            this.tf.setText(this.generator.result + "");
+            if (this.cb.isSelected()) {
+                final String s = type;
+                int n = -1;
+                switch (s.hashCode()) {
+                    case 463370811:
+                        if (s.equals("примеры")) {
+                            n = 0;
+                            break;
+                        }
                         break;
-                    }
-                    break;
-            }
-            switch (n) {
-                case 0:
-                    this.recordInHistory("взята подсказка для примера " + this.s + " ответ: " + this.generator.result);
-                    break;
-                default:
-                    this.recordInHistory("взята подсказка для уравнения " + this.s + " ответ: x=" + this.generator.result);
-                    break;
+                }
+                switch (n) {
+                    case 0:
+                        this.recordInHistory("взята подсказка для примера " + this.s + " ответ: " + this.generator.result);
+                        break;
+                    default:
+                        this.recordInHistory("взята подсказка для уравнения " + this.s + " ответ: x=" + this.generator.result);
+                        break;
+                }
             }
         }
     }
@@ -225,45 +231,66 @@ public class Controller implements Initializable {
 
     @FXML
     private void scipAction() {
-        ++this.f;
-        if (this.cb.isSelected()) {
-            final String s = type;
-            int n = -1;
-            switch (s.hashCode()) {
-                case 463370811:
-                    if (s.equals("примеры")) {
-                        n = 0;
+        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Пропуск задания");
+        alert.setHeaderText("");
+        alert.setContentText("Вы действительно хотите пропустить это задание?");
+        final Optional<ButtonType> resultAlert =  alert.showAndWait();
+        if (resultAlert.get() == ButtonType.OK) {
+            ++this.f;
+            if (this.cb.isSelected()) {
+                final String s = type;
+                int n = -1;
+                switch (s.hashCode()) {
+                    case 463370811:
+                        if (s.equals("примеры")) {
+                            n = 0;
+                            break;
+                        }
                         break;
-                    }
-                    break;
+                }
+                switch (n) {
+                    case 0:
+                        this.recordInHistory("пример " + this.label.getText() + " пропущен");
+                        break;
+                    default:
+                        this.recordInHistory("уравнение " + this.label.getText() + " пропущено");
+                        break;
+                }
             }
-            switch (n) {
-                case 0:
-                    this.recordInHistory("пример " + this.label.getText() + " пропущен");
-                    break;
-                default:
-                    this.recordInHistory("уравнение " + this.label.getText() + " пропущено");
-                    break;
+            if (this.list.getSelectionModel().getSelectedIndex() == -1 || this.list.getSelectionModel().getSelectedIndex() == 0) {
+                this.nextFormula(random.nextInt(14) + 1,type);
+            } else {
+                this.nextFormula(this.list.getSelectionModel().getSelectedIndex(), type);
             }
-        }
-        if (this.list.getSelectionModel().getSelectedIndex() == -1 || this.list.getSelectionModel().getSelectedIndex() == 0) {
-            this.nextFormula(random.nextInt(14) + 1,type);
-        } else {
-            this.nextFormula(this.list.getSelectionModel().getSelectedIndex(), type);
-        }
-        this.t.setText("");
-        this.tf.setText("");
-        this.tf.requestFocus();
-        this.image.setDisable(false);
-        this.showBal();
-        if (this.cb.isSelected()) {
-            this.recordInHistory("текущая оценка: " + this.bal);
+            this.t.setText("");
+            this.tf.setText("");
+            this.tf.requestFocus();
+            this.image.setDisable(false);
+            this.showBal();
+            if (this.cb.isSelected()) {
+                this.recordInHistory("текущая оценка: " + this.bal);
+            }
         }
     }
 
     @FXML
     private void showHistory() {
-        new History().setVisible(true);
+        final Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("История");
+        alert.setHeaderText("Просмотр Истории");
+        final TextArea ta = new TextArea(readerHistory(path));
+        ta.setEditable(false);
+        ta.setWrapText(true);
+        ta.setMaxWidth(Double.MAX_VALUE);
+        ta.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(ta, Priority.ALWAYS);
+        GridPane.setHgrow(ta, Priority.ALWAYS);
+        final GridPane gp = new GridPane();
+        gp.setMaxWidth(Double.MAX_VALUE);
+        gp.add( ta, 0, 1);
+        alert.getDialogPane().setContent(gp);
+        alert.showAndWait();
     }
 
     @FXML
@@ -346,16 +373,16 @@ public class Controller implements Initializable {
 
     @FXML
     private void autorInfo() {
-        startDonate("Об Авторе","Автор: Алекс Мирный\nМесто работы: КБЖБ\nХотите поддержать автора?");
+        alertWindow("","Автор: Алексей Крючков","Об Авторе");
     }
     @FXML
     private void programInfo(){
-        startDonate("О Программе","Название: Математика\nВерсия: 4.0\nХотите поддержать автора?");
+        alertWindow("","Название: Математика\nВерсия: 5.0","О Программе");
     }
     @FXML
     private void clearHistory(){
         final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Подтвердить");
+        alert.setTitle("Удаление истории");
         alert.setHeaderText("Удалить историю?");
         alert.setContentText("Вы действительно хотите удалить историю?");
         final Optional<ButtonType> resultAlert =  alert.showAndWait();
@@ -363,6 +390,24 @@ public class Controller implements Initializable {
             deleteHistory();
             toast.setMessage("удаление истории");
         }
+    }
+    private String readerHistory(final String p) {
+        StringBuilder f = new StringBuilder();
+        try {
+            final File file = new File(p + System.getProperty("file.separator") + "history");
+            final FileReader fr = new FileReader(file);
+            try (final BufferedReader br = new BufferedReader(fr)) {
+                String str;
+                while ((str = br.readLine()) != null) {
+                    f.append(str).append("\n");
+                }
+                fr.close();
+            }
+        }
+        catch (IOException e) {
+            e.getMessage();
+        }
+        return f.toString();
     }
     private boolean isEmpty(String s){
         return s == null || s.trim().length() == 0;
@@ -436,16 +481,7 @@ public class Controller implements Initializable {
             this.bal = 5;
         }
     }
-    private void startDonate(String a,String b){
-        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(a);
-        alert.setHeaderText("");
-        alert.setContentText(b);
-        final Optional<ButtonType> resultAlert = alert.showAndWait();
-        if (resultAlert.get() == ButtonType.OK) {
-            new Donate().setVisible(true);
-        }
-    }
+
     private void alertWindow(final String s, final String s2, final String str) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(str);
@@ -607,13 +643,6 @@ public class Controller implements Initializable {
                     break;
             }
         }
-    }
-    String getPath() {
-        return this.path;
-    }
-
-    void setPath(final String p) {
-        this.path = p;
     }
 
     @Override
