@@ -13,39 +13,33 @@
     </Label>
     <TextField fx:id="tf" layoutX="145.0" layoutY="211.0" prefHeight="26.0" prefWidth="250.0" promptText="ваш ответ" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="14.0" />
     <Button fx:id="inspectButton" layoutX="364.0" layoutY="211.0" onAction="#inspectAction" prefHeight="26.0" prefWidth="162.0" text="проверить" AnchorPane.bottomAnchor="43.0" AnchorPane.rightAnchor="14.0" />
-    <CheckBox fx:id="cb" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#checkAction" text="записывать историю" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
+    <CheckBox fx:id="cb" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#checkRecHistoryAction" text="записывать историю" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
     <ListView fx:id="list" focusTraversable="false" layoutX="20.0" layoutY="45.0" onMouseClicked="#typeSelect" prefHeight="208.0" prefWidth="179.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="40.0" />
     <TextArea fx:id="t" layoutX="217.0" layoutY="44.0" prefHeight="208.0" prefWidth="417.0" promptText="ход решения" wrapText="true" AnchorPane.leftAnchor="217.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="40.0">
         <font>
           <Font name="System Bold" size="15.0" />
         </font>
     </TextArea>
-    <CheckBox fx:id="cbox" layoutX="482.0" layoutY="393.0" mnemonicParsing="false" onAction="#checkBoxAction" text="с ходом решения" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="14.0" />
+    <CheckBox fx:id="cbox" layoutX="482.0" layoutY="393.0" mnemonicParsing="false" onAction="#checkAccSolutionAction" text="с ходом решения" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="14.0" />
     <ImageView fx:id="image" fitHeight="70.0" fitWidth="70.0" layoutX="567.0" layoutY="271.0" onMouseClicked="#imageAction" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="90.0" AnchorPane.rightAnchor="10.0" />
-   <MenuBar layoutX="-1.0" layoutY="-1.0" prefHeight="29.0" prefWidth="648.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-     <menus>
-       <Menu mnemonicParsing="false" text="Выбор">
-         <items>
-             <MenuItem mnemonicParsing="false" onAction="#examples" text="Примеры" />
-             <MenuItem mnemonicParsing="false" onAction="#equations" text="Уравнения" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="История">
-         <items>
-             <MenuItem mnemonicParsing="false" onAction="#registrationAction" text="Регистрация" />
-             <MenuItem mnemonicParsing="false" onAction="#showHistory" text="Просмотр" />
-             <MenuItem mnemonicParsing="false" onAction="#clearHistory" text="Удаление" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="Справка">
-         <items>
-             <MenuItem mnemonicParsing="false" onAction="#showResultAction" text="Подсказка" />
-             <MenuItem mnemonicParsing="false" onAction="#programInfo" text="О Программе" />
-             <MenuItem mnemonicParsing="false" onAction="#autorInfo" text="Об Авторе" />
-             <MenuItem mnemonicParsing="false" onAction="#exit" text="Выход" />
-         </items>
-       </Menu>
-     </menus>
-   </MenuBar>
-   <Button fx:id="scipButton" layoutX="398.0" layoutY="364.0" onAction="#scipAction" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="пропустить" AnchorPane.bottomAnchor="43.0" AnchorPane.rightAnchor="188.0" />
+    <MenuBar layoutX="-1.0" layoutY="-1.0" prefHeight="29.0" prefWidth="648.0" AnchorPane.leftAnchor="0.0"
+             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Menu mnemonicParsing="false" text="Выбор">
+            <MenuItem mnemonicParsing="false" onAction="#examples" text="Примеры"/>
+            <MenuItem mnemonicParsing="false" onAction="#equations" text="Уравнения"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="История">
+            <MenuItem mnemonicParsing="false" onAction="#registrationAction" text="Регистрация"/>
+            <MenuItem mnemonicParsing="false" onAction="#showHistory" text="Просмотр"/>
+            <MenuItem mnemonicParsing="false" onAction="#cleanHistory" text="Очистить"/>
+            <MenuItem mnemonicParsing="false" onAction="#deleteHistoryFile" text="Удалить"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Справка">
+            <MenuItem mnemonicParsing="false" onAction="#showResultAction" text="Подсказка"/>
+            <MenuItem mnemonicParsing="false" onAction="#programInfo" text="О Программе"/>
+            <MenuItem mnemonicParsing="false" onAction="#authorInfo" text="Об Авторе"/>
+            <MenuItem mnemonicParsing="false" onAction="#exit" text="Выход"/>
+        </Menu>
+    </MenuBar>
+   <Button fx:id="skipButton" layoutX="398.0" layoutY="364.0" onAction="#skipAction" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="пропустить" AnchorPane.bottomAnchor="43.0" AnchorPane.rightAnchor="188.0" />
 </AnchorPane>
