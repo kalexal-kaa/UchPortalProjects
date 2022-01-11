@@ -10,6 +10,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
+import java.util.Objects;
+
 class Toast {
     void setMessage(final String toastMsg){
         Stage toastStage=new Stage();
@@ -22,7 +25,7 @@ class Toast {
         root.getStyleClass().add("toast");
         root.setOpacity(0);
         Scene scene = new Scene(root);
-        scene.getStylesheets().add((getClass().getResource("css/toaststyle.css")).toExternalForm());
+        scene.getStylesheets().add((Objects.requireNonNull(getClass().getResource("css/toaststyle.css"))).toExternalForm());
         scene.setFill(null);
         toastStage.setScene(scene);
         toastStage.show();
@@ -32,16 +35,13 @@ class Toast {
         tl1.setOnFinished((ae) ->
         {
             new Thread(() -> {
-                try
-                {
+                try {
                     Thread.sleep(2000);
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.getMessage();
                 }
                 Timeline tl2 = new Timeline();
-                KeyFrame fadeOutKey1 = new KeyFrame(Duration.millis(500),new KeyValue (toastStage.getScene().getRoot().opacityProperty(),0));
+                KeyFrame fadeOutKey1 = new KeyFrame(Duration.millis(500), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 0));
                 tl2.getKeyFrames().add(fadeOutKey1);
                 tl2.setOnFinished((aeb) -> toastStage.close());
                 tl2.play();
