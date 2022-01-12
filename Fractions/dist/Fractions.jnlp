@@ -2,13 +2,13 @@
 <jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Fractions.jnlp">
   <information>
     <title>Fractions</title>
-    <vendor>kaa</vendor>
+    <vendor>Alex K</vendor>
     <description>null</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Fractions.jar" size="19688" download="eager" />
+    <jar href="Fractions.jar" size="38414" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="fractions.Fractions"  name="Fractions" />
   <update check="always"/>
