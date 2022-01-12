@@ -2,13 +2,13 @@
 <jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="JavaFXApp.jnlp">
   <information>
     <title>MemoryTrainer</title>
-    <vendor>Kaa</vendor>
+    <vendor>Alex K</vendor>
     <description>JavaFXApp</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXApp.jar" size="19530" download="eager" />
+    <jar href="JavaFXApp.jar" size="16401" download="eager" />
   </resources>
   <jfx:javafx-desc  width="600" height="400" main-class="sample.Main"  name="JavaFXApp" />
   <update check="background"/>
