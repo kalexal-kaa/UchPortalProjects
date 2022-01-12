@@ -1,10 +1,11 @@
-#lAuthorInfo:hover{
+#lProgramInfo:hover{
     -fx-text-fill: blue;
 }
-#lAuthorInfo:pressed{
+#lProgramInfo:pressed{
     -fx-text-fill: brown;
 }
 .toast{
+    -fx-border-radius: 30;
     -fx-background-radius: 30;
     -fx-background-color: rgb(132, 132, 132);
     -fx-padding: 20;

@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 public class Toast {
 
     void setMessage(final String toastMsg){
@@ -25,7 +27,7 @@ public class Toast {
         root.getStyleClass().add("toast");
         root.setOpacity(0);
         Scene scene = new Scene(root);
-        scene.getStylesheets().add((getClass().getResource("style.css")).toExternalForm());
+        scene.getStylesheets().add((Objects.requireNonNull(getClass().getResource("style.css"))).toExternalForm());
         scene.setFill(null);
         toastStage.setScene(scene);
         toastStage.show();

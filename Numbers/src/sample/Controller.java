@@ -23,10 +23,11 @@ public class Controller implements Initializable
     @FXML
     private ComboBox<String> cbTime;
 
-    private ObservableList<String> gameTypeList,timeList;
+    private final ObservableList<String> gameTypeList;
+    private final ObservableList<String> timeList;
     private String[] mas,userMas;
-    private Random random;
-    private Toast toast;
+    private final Random random;
+    private final Toast toast;
     private int time,n,v,f;
 
     public Controller() {
@@ -138,8 +139,8 @@ public class Controller implements Initializable
         this.lGameInfo.setText("Игра в " + this.list.getSelectionModel().getSelectedItem());
     }
     @FXML
-    private void authorInfo() {
-        startDonate();
+    private void programInfo() {
+        alertWindow("","Название: Тренировка Памяти\nВерсия: 2.0\nАвтор: Алексей Крючков","О Программе");
     }
     @FXML
     private void showAction(){
@@ -214,7 +215,7 @@ public class Controller implements Initializable
                         lTimer.setText(String.format("%d", a));
                     });
                 }
-            },1000*i);
+            }, 1000L *i);
         }
     }
     private void setNumbers(){
@@ -234,17 +235,6 @@ public class Controller implements Initializable
         e14.setText(mas[13]);
         e15.setText(mas[14]);
         e16.setText(mas[15]);
-    }
-    private void startDonate(){
-        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setResizable(true);
-        alert.setTitle("Об Авторе");
-        alert.setHeaderText("");
-        alert.setContentText("Автор: Алекс Мирный\nМесто работы: КБЖБ\nХотите поддержать автора?");
-        final Optional<ButtonType> resultAlert = alert.showAndWait();
-        if (resultAlert.get() == ButtonType.OK) {
-            new Donate().setVisible(true);
-        }
     }
     private void alertWindow(final String s, final String s2, final String str) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
