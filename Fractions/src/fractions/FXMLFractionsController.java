@@ -17,6 +17,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -25,26 +27,35 @@ import javafx.scene.control.TextField;
 public class FXMLFractionsController implements Initializable {
     
     @FXML
-    private Label t;
+    private Label upFirst;
+    @FXML
+    private Label downFirst;
+    @FXML
+    private Label upSecond;
+    @FXML
+    private Label downSecond;
+    @FXML
+    private ImageView signImage;
     @FXML
     private TextField tf1,tf2,tf3;
     @FXML
-    ComboBox<String> cb1,cb2;
+    private ComboBox<String> cb1,cb2;
     
-    ObservableList<String> List1,List2;
+    private final ObservableList<String> list1;
+    private final ObservableList<String> list2;
     
-    int v,f,sk,diapasone;
-    double a,b,c,d,nUp,nDown,x;
-    String s;
+    private int v,f,sk,diapasone;
+    private double a,b,c,d,nUp,nDown,x;
+    private String s,s1,s2;
     
     public FXMLFractionsController(){
         x=0;
         diapasone=10;
-        List1=FXCollections.observableArrayList("10","20","30","40","50","60","70","80","90","100");
-        List2=FXCollections.observableArrayList("случайное","сложение","вычитание","умножение","деление");
+        list1=FXCollections.observableArrayList("10","20","30","40","50","60","70","80","90","100");
+        list2=FXCollections.observableArrayList("случайное","сложение","вычитание","умножение","деление");
     }
-    @FXML
-    private void inspectAction() {
+    
+    public void inspectAction() {
         String st = null;
         if(null != s)switch (s) {
             case "+":
@@ -66,47 +77,83 @@ public class FXMLFractionsController implements Initializable {
                 st=integerPart();
             }
         int r1,r2,r3;
+        if(isEmpty(tf1.getText())){
+            r1 = 0;
+        }else{
+            try {
+                r1=Integer.parseInt(tf1.getText());
+            }catch (NumberFormatException e) {
+                e.getMessage();
+                alert("Введите корректные данные в поле целой части");
+                tf1.requestFocus();
+                return;
+            }
+        }
+        
         try{
-        r1=Integer.parseInt(tf1.getText());
-        r2=Integer.parseInt(tf2.getText());
-        r3=Integer.parseInt(tf3.getText());
+           r2=Integer.parseInt(tf2.getText());
         }catch(NumberFormatException e){
             e.getMessage();
-            alert("Введите корректные данные во все 3 поля!\nЕсли целая часть отсутствует, то введите ноль.");
+            alert("Введите корректные данные в поле числителя");
+            tf2.requestFocus();
             return;
         }
+        
+        try {
+             r3=Integer.parseInt(tf3.getText());
+        }catch (NumberFormatException e) {
+             e.getMessage();
+             alert("Введите корректные данные в поле знаменателя");
+             tf3.requestFocus();
+             return;
+        }
+        
         if(r1==(int)x&&r2==(int)nUp&&r3==(int)nDown){
-            alert("ВЕРНО! "+t.getText()+"="+st);
+            alert("ВЕРНО! "+s1+s+s2+"="+st);
             generateExample();
             v++;
             x=0;
         }else{
-            alert("НЕВЕРНО! Верный ответ:\n "+t.getText()+"="+st);
+            alert("НЕВЕРНО! Верный ответ:\n "+s1+s+s2+"="+st);
             generateExample();
             f++;
             x=0;
         }
     }
-    @FXML
-    private void skip(){
-        generateExample();
-        sk++;
+    
+    public void skipAction(){
+        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Пропустить пример");
+        alert.setHeaderText("");
+        alert.setContentText("Вы действительно хотите пропустить этот пример?");
+        final Optional<ButtonType> resultAlert =  alert.showAndWait();
+        if (resultAlert.get() == ButtonType.OK) {
+            generateExample();
+            sk++;
+        }
     }
-    @FXML
-    private void showResults(){
+    
+    public void showResults(){
           if (v==0&&f==0&&sk==0){
                this.alert("Пока нет результатов.");
            }else {
                this.alert("Верных ответов: " + this.v + "\nНеверных ответов: " + this.f+"\nПропущено примеров: " + this.sk);
        }
     }
-    @FXML
-    private void autorInfo(){
-        startDonate("Об Авторе","Автор: Алекс Мирный\nМесто работы: КБЖБ\nХотите поддержать автора?");
+    
+    public void programInfo(){
+        alert("Название: Обыкновенные Дроби\nВерсия: 4.0\nАвтор: Алексей Крючков");
     }
-    @FXML
-    private void diapasoneAction(){
+    
+    public void diapasoneAction(){
         diapasone=10+(10*cb1.getSelectionModel().getSelectedIndex());
+    }
+    private void showSign(final String path) {
+        final Image i = new Image(path);
+        this.signImage.setImage(i);
+    }
+    private boolean isEmpty(String s){
+        return s == null || s.trim().length() == 0;
     }
     private void alert(final String s) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -147,7 +194,6 @@ public class FXMLFractionsController implements Initializable {
         return (int)nUp+"/"+(int)nDown;    
    }
     private void generateExample(){
-        String s1,s2;
         s=sign();
         if("-".equals(s)){
         do {                
@@ -158,7 +204,10 @@ public class FXMLFractionsController implements Initializable {
         c=nUp;
         d=nDown; 
          } while ((a/b)<=(c/d));
-            t.setText(s1+" - "+s2);
+            upFirst.setText((int)a+"");
+            downFirst.setText((int)b+"");
+            upSecond.setText((int)c+"");
+            downSecond.setText((int)d+"");
             return;
         }
         s1=generateFraction();
@@ -167,7 +216,10 @@ public class FXMLFractionsController implements Initializable {
         s2=generateFraction();
         c=nUp;
         d=nDown;
-        t.setText(s1+" "+s+" "+s2);
+        upFirst.setText((int)a+"");
+        downFirst.setText((int)b+"");
+        upSecond.setText((int)c+"");
+        downSecond.setText((int)d+"");
     }
     private String sign(){
         String str = null;
@@ -180,15 +232,19 @@ public class FXMLFractionsController implements Initializable {
         switch(sig){
             case 0:
                 str="+";
+                showSign("images/plus.png");
                 break;
                 case 1:
                     str="-";
+                    showSign("images/minus.png");
                     break;
                     case 2:
                         str="*";
+                        showSign("images/multiply.png");
                         break;
                         case 3:
                             str=":";
+                            showSign("images/divide.png");
                             break;
                             default:
                                 break;
@@ -196,21 +252,11 @@ public class FXMLFractionsController implements Initializable {
         }
         return str;
     }
-    private void startDonate(String a,String b){
-        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(a);
-        alert.setHeaderText("");
-        alert.setContentText(b);
-        final Optional<ButtonType> resultAlert = alert.showAndWait();
-        if (resultAlert.get() == ButtonType.OK) {
-            new Donate().setVisible(true);
-        }
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cb1.setItems(List1);
+        cb1.setItems(list1);
         cb1.getSelectionModel().selectFirst();
-        cb2.setItems(List2);
+        cb2.setItems(list2);
         cb2.getSelectionModel().selectFirst();
         generateExample();
     }    

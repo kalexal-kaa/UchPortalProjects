@@ -24,7 +24,7 @@ public class Fractions extends Application {
         
         Scene scene = new Scene(root);
         stage.setTitle("Обыкновенные Дроби");
-        stage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("icon/icon.png")));
+        stage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("images/icon.png")));
         stage.setScene(scene);
         stage.show();
     }

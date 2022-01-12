@@ -4,25 +4,24 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="508.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fractions.FXMLFractionsController">
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fractions.FXMLFractionsController">
     <children>
-      <Button layoutX="158.0" layoutY="424.0" mnemonicParsing="false" onAction="#inspectAction" prefHeight="26.0" prefWidth="496.0" text="ПРОВЕРИТЬ" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="158.0" AnchorPane.rightAnchor="158.0" />
-      <Label fx:id="t" alignment="CENTER" layoutX="155.0" layoutY="177.0" onMouseClicked="#skip" prefHeight="248.0" prefWidth="506.0" textFill="#3f35c6" AnchorPane.bottomAnchor="93.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="177.0">
-         <font>
-            <Font name="System Bold" size="50.0" />
-         </font>
-      </Label>
+      <Button layoutX="158.0" layoutY="435.0" mnemonicParsing="false" onAction="#inspectAction" prefHeight="26.0" prefWidth="496.0" text="ПРОВЕРИТЬ" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="158.0" AnchorPane.rightAnchor="158.0" />
       <TextField fx:id="tf1" layoutX="214.0" layoutY="30.0" prefHeight="26.0" prefWidth="256.0" AnchorPane.leftAnchor="346.0" AnchorPane.rightAnchor="346.0" />
       <Label layoutX="346.0" layoutY="14.0" text="целая часть:" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="14.0" />
-      <Button focusTraversable="false" layoutX="204.0" layoutY="460.0" mnemonicParsing="false" onAction="#showResults" prefHeight="26.0" prefWidth="194.0" text="ИТОГИ" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="204.0" AnchorPane.rightAnchor="204.0" />
+      <Button focusTraversable="false" layoutX="264.0" layoutY="460.0" mnemonicParsing="false" onAction="#showResults" prefHeight="26.0" prefWidth="297.0" text="ИТОГИ" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="252.0" />
       <TextField fx:id="tf2" layoutX="155.0" layoutY="83.0" prefHeight="26.0" prefWidth="506.0" AnchorPane.leftAnchor="346.0" AnchorPane.rightAnchor="346.0" />
       <TextField fx:id="tf3" layoutX="155.0" layoutY="139.0" prefHeight="26.0" prefWidth="506.0" AnchorPane.leftAnchor="346.0" AnchorPane.rightAnchor="346.0" />
       <Label layoutX="346.0" layoutY="67.0" text="числитель:" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="67.0" />
       <Label layoutX="346.0" layoutY="123.0" text="знаменатель:" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="123.0" />
-      <Label layoutX="763.0" layoutY="6.0" onMouseClicked="#autorInfo" text="Об Авторе" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+      <Label layoutX="763.0" layoutY="6.0" onMouseClicked="#programInfo" text="О Программе" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
@@ -30,6 +29,50 @@
       <ComboBox fx:id="cb1" focusTraversable="false" layoutX="67.0" layoutY="83.0" onAction="#diapasoneAction" prefWidth="150.0" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="83.0" />
       <ComboBox fx:id="cb2" focusTraversable="false" layoutX="615.0" layoutY="96.0" prefWidth="150.0" AnchorPane.rightAnchor="67.0" AnchorPane.topAnchor="83.0" />
       <Label layoutX="67.0" layoutY="67.0" text="числа до:" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="67.0" />
-      <Label layoutX="596.0" layoutY="67.0" text="действие:" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="67.0" />
+      <Label layoutX="597.0" layoutY="67.0" text="действие:" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="67.0" />
+      <HBox alignment="CENTER" layoutX="258.0" layoutY="216.0" prefHeight="164.0" prefWidth="298.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="258.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="upFirst" alignment="CENTER" prefHeight="80.0" prefWidth="99.0">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="20.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/line.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="downFirst" alignment="CENTER" prefHeight="80.0" prefWidth="100.0">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <ImageView fx:id="signImage" fitHeight="105.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="upSecond" alignment="CENTER" prefHeight="79.0" prefWidth="101.0">
+                           <font>
+                              <Font size="44.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="43.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/line.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="downSecond" alignment="CENTER" prefHeight="79.0" prefWidth="99.0">
+                           <font>
+                              <Font size="44.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+             </HBox>
+      <Button focusTraversable="false" layoutX="202.0" layoutY="475.0" mnemonicParsing="false" onAction="#skipAction" prefHeight="25.0" prefWidth="405.0" text="ПРОПУСТИТЬ" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="202.0" />
    </children>
 </AnchorPane>
