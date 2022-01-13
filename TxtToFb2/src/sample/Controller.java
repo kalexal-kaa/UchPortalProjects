@@ -23,8 +23,8 @@ public class Controller {
       @FXML
       private CheckBox cb;
       private BufferedImage image;
-      private BookMaker bm;
-      private Toast toast;
+      private final BookMaker bm;
+      private final Toast toast;
       private String fb2Name;
 
     public Controller() {
@@ -154,7 +154,7 @@ public class Controller {
       }
       @FXML
       private void authorInfo() {
-          startDonate();
+          alert("Автор: Алексей Крючков\nTXTtoFB2Converter\nВерсия: 4");
     }
     private String encodeToString(BufferedImage image) {
         String imageString = null;
@@ -169,15 +169,15 @@ public class Controller {
 
             bos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         return imageString;
     }
     private void alert(final String s) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setResizable(true);
-        alert.getDialogPane().setPrefSize(400, 100);
-        alert.setTitle("Внимание!");
+        alert.getDialogPane().setPrefSize(400, 120);
+        alert.setTitle("");
         alert.setHeaderText("");
         alert.setContentText(s);
         alert.showAndWait();
@@ -205,16 +205,6 @@ public class Controller {
             toast.setMessage("Создание книги отменено");
         }
     }
-    private void startDonate(){
-        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Об Авторе");
-        alert.setHeaderText("");
-        alert.setContentText("Автор: Алекс Мирный\nМесто работы: КБЖБ\nХотите поддержать автора?");
-        final Optional<ButtonType> resultAlert = alert.showAndWait();
-        if (resultAlert.get() == ButtonType.OK) {
-            new Donate().setVisible(true);
-        }
-    }
     private String getDate(){
           final Calendar calendar = new GregorianCalendar();
           final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -223,24 +213,30 @@ public class Controller {
     private boolean isEmpty(String p){
         return p.trim().length()==0;
     }
+    private boolean isWindows() {
+        final String os = System.getProperty("os.name").toLowerCase();
+        return os.contains("win");
+    }
     private void writer(String pathFile, String text){
-        try (final FileWriter pw = new FileWriter(pathFile)) {
+        try (final PrintWriter pw = new PrintWriter(pathFile, "UTF-8")) {
             pw.write(text);
         } catch (IOException e) {
             e.getMessage();
         }
     }
     private String reader(String s) {
+        String charsetName;
+        if(isWindows()){
+            charsetName = "Windows-1251";
+        }else{
+            charsetName = "UTF-8";
+        }
         StringBuilder f = new StringBuilder();
-        try {
-            final File file1 = new File(s);
-            final FileReader fr = new FileReader(file1);
-            final BufferedReader br = new BufferedReader(fr);
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(s), charsetName))){
             String str;
             while ((str = br.readLine()) != null) {
                 f.append("<p>").append(str).append("</p>");
             }
-            fr.close();
             br.close();
         }
         catch (IOException e) {
