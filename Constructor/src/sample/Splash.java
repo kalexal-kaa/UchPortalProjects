@@ -4,46 +4,44 @@ import java.awt.SplashScreen;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Splash extends Application{
+public class Splash extends Application {
 
-public Splash() {
+    public Splash() {
 
-super();
+        super();
 
-}
+    }
 
-public static void main(final String[] args) {
+    public static void main(final String[] args) {
 
-SplashScreen mySplash = SplashScreen.getSplashScreen();
+        SplashScreen mySplash = SplashScreen.getSplashScreen();
 
-try {
+        try {
 
-Thread.sleep(3000L);
+            Thread.sleep(3000L);
 
-}
+        } catch (InterruptedException ex) {
 
-catch (InterruptedException ex) {
+            ex.getMessage();
 
-ex.getMessage();
+        }
 
-}
+        if (mySplash != null) {
 
-if (mySplash != null) {
+            mySplash.close();
 
-mySplash.close();
+            Application.launch(Main.class, args);
 
-Application.launch(Main.class, args);
+        }
 
-}
+    }
 
-}
+    @Override
 
-@Override
+    public void start(Stage primaryStage) throws Exception {
 
-public void start(Stage primaryStage) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
-throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-}
+    }
 
 }

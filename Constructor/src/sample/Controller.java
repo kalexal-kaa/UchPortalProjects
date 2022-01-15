@@ -228,8 +228,15 @@ public class Controller implements Initializable
                 if (f.equals(directoryTests)){
                     return;
                 }
-                deleteDirectory(f);
-            }
+                final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Вопрос");
+                alert.setHeaderText("");
+                alert.setContentText("Удалить тест " + f.getName() + "?");
+                final Optional<ButtonType> resultAlert = alert.showAndWait();
+                if (resultAlert.get() == ButtonType.OK) {
+                    deleteDirectory(f);
+                }
+              }
             } else {
                 final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Вопрос");
@@ -252,7 +259,7 @@ public class Controller implements Initializable
 
     @FXML
     private void programmInfoItem() {
-        alertWindow("О Программе","Название: Конструктор Текстовых Тестов\nВерсия: 5","");
+        alertWindow("О Программе","Название: Конструктор Текстовых Тестов\nВерсия: 6.0","");
     }
 
     @FXML
