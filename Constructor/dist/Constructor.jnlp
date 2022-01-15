@@ -2,13 +2,13 @@
 <jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Constructor.jnlp">
   <information>
     <title>Constructor</title>
-    <vendor>kalex</vendor>
+    <vendor>Alex K</vendor>
     <description>null</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" java-vm-args="-splash:src/res/images/splash.png "  href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Constructor.jar" size="301422" download="eager" />
+    <jar href="Constructor.jar" size="301486" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Constructor" >
     <param name="requiredFXVersion" value="8.0+"/>
