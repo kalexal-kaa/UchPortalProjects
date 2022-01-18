@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
 
 public class Controller implements Initializable
 {
@@ -60,8 +61,7 @@ public class Controller implements Initializable
         this.toast=new Toast();
     }
 
-    @FXML
-    private void nextQuestionAction() {
+    public void nextQuestionAction() {
         if (isEmpty(this.t.getText())) {
             this.toast.setMessage("Введите вопрос и варианты ответа");
             t.requestFocus();
@@ -85,9 +85,21 @@ public class Controller implements Initializable
                 this.b.setText("результат");
             }
             if (this.calc > this.volumeAnswers("ответы1")) {
+                if("anonym".equals(userName())){
+                    final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("ВНИМАНИЕ!");
+                    alert.setHeaderText("Поле имени не заполнено!");
+                    alert.setContentText("Хотите продолжить без ввода имени?");
+                    final Optional<ButtonType> resultAlert = alert.showAndWait();
+                    if (resultAlert.get() != ButtonType.OK) {
+                        toast.setMessage("Введите ваше имя и фамилию");
+                        tf.requestFocus();
+                        return;
+                    }
+                }
                 this.calc = 0;
                 this.recordInFile(this.cb.getValue(), this.testPath + System.getProperty(this.separator) + "ответы2", true);
-                this.recordInFile("\n" + this.dayDateAndTime() + "\n" + this.userName() + "\n" + this.resultsTest(), this.testPath + System.getProperty(this.separator) + "результаты", true);
+                this.recordInFile("\n" + this.dayDateAndTime() + "\n" + this.userName() + "\n" + this.resultsTest(), this.testPath + System.getProperty(separator) + "результаты" + System.getProperty(separator) + userName(), true);
                 this.showMessage(this.resultsTest(), "Тест завершен", "Результат");
                 this.recordInFile("", this.testPath + System.getProperty(this.separator) + "ответы2", false);
                 this.cleanAll();
@@ -103,8 +115,7 @@ public class Controller implements Initializable
         }
     }
 
-    @FXML
-    private void openItem() {
+    public void openItem() {
         final DirectoryChooser dc = new DirectoryChooser();
         dc.setTitle("Открытие теста");
         dc.setInitialDirectory(directoryTests);
@@ -117,7 +128,10 @@ public class Controller implements Initializable
             this.testPath = file.getAbsolutePath();
             if (!new File(this.testPath + System.getProperty(this.separator) + "ответы1").exists()) {
                 this.alertWindow("", "Тест " + file.getName() + " пока пустой.\nДополните его.", "Внимание!");
-                closeItem();
+                this.cleanAll();
+                this.t.setEditable(false);
+                this.b.setText("следующий вопрос");
+                this.b.setDisable(true);
                 return;
             }
             if (this.volumeAnswers("ответы2") != 0) {
@@ -161,15 +175,20 @@ public class Controller implements Initializable
             this.r = 0;
         }
     }
-    @FXML
-    private void closeItem(){
-        this.cleanAll();
-        this.t.setEditable(false);
-        this.b.setText("следующий вопрос");
-        this.b.setDisable(true);
+    public void closeItem(){
+        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Вопрос");
+        alert.setHeaderText("");
+        alert.setContentText("Перевести программу в исходное состояние?");
+        final Optional<ButtonType> resultAlert = alert.showAndWait();
+        if (resultAlert.get() == ButtonType.OK) {
+            this.cleanAll();
+            this.t.setEditable(false);
+            this.b.setText("следующий вопрос");
+            this.b.setDisable(true);
+        }
     }
-    @FXML
-    private void createItem() {
+    public void createItem() {
         final TextInputDialog dialog = new TextInputDialog(new Random().nextInt(10000)+"");
         dialog.setTitle("Создание теста");
         dialog.setHeaderText("Введите название нового теста");
@@ -180,10 +199,14 @@ public class Controller implements Initializable
             file = new File(this.testPath);
             if (file.exists()) {
                 this.alertWindow("", "Тест с таким названием уже имеется\nВыберите другое название", "Ошибка");
-                closeItem();
+                this.cleanAll();
+                this.t.setEditable(false);
+                this.b.setText("следующий вопрос");
+                this.b.setDisable(true);
                 return;
             }
             file.mkdir();
+            new File(testPath + System.getProperty(separator) + "результаты").mkdir();
             this.l1.setText(file.getName());
             this.l2.setText("конструирование");
             this.l3.setText("");
@@ -195,8 +218,7 @@ public class Controller implements Initializable
         }
     }
 
-    @FXML
-    private void appendItem() {
+    public void appendItem() {
         final DirectoryChooser dc = new DirectoryChooser();
         dc.setTitle("Дополнение теста");
         dc.setInitialDirectory(directoryTests);
@@ -217,8 +239,11 @@ public class Controller implements Initializable
             this.r = 1;
         }
     }
-    @FXML
-    private void deleteItem() {
+    public void deleteItem() {
+        if("тестирование".equals(l2.getText())){
+            alertWindow("", "Удаление тестов недоступно в режиме тестирования", "Сообщение");
+            return;
+        }
         if (file == null) {
             final DirectoryChooser dc = new DirectoryChooser();
             dc.setTitle("Удаление теста");
@@ -252,32 +277,62 @@ public class Controller implements Initializable
                 }
             }
         }
-    @FXML
-    private void autorInfoItem() {
+    public void authorInfoItem() {
        alertWindow("Об Авторе","Автор: Крючков Алексей","");
     }
 
-    @FXML
-    private void programmInfoItem() {
-        alertWindow("О Программе","Название: Конструктор Текстовых Тестов\nВерсия: 6.0","");
+    public void programInfoItem() {
+        alertWindow("О Программе","Название: Конструктор Текстовых Тестов\nВерсия: 7.0","");
     }
 
-    @FXML
-    private void resultsOpenItem() {
+    public void resultsOpenItem() {
+        if("тестирование".equals(l2.getText())){
+            alertWindow("", "Просмотр результатов недоступен в режиме тестирования", "Сообщение");
+            return;
+        }
         final DirectoryChooser dc = new DirectoryChooser();
         dc.setTitle("Просмотр результатов");
         dc.setInitialDirectory(directoryTests);
         final File file1 = dc.showDialog(null);
-        if (file1 != null&&!file1.equals(directoryTests)) {
-            final File f = new File(file1.getAbsolutePath() + System.getProperty(this.separator) + "результаты");
-            if (!f.exists()) {
-                this.alertWindow("", "Пока нет результатов для теста\n" + file1.getName(), "Результаты");
-                return;
+        if (file1 != null) {
+            final FileChooser fc = new FileChooser();
+            fc.setTitle("Выбор файла для просмотра");
+            fc.setInitialDirectory(new File(file1+System.getProperty(separator)+"результаты"));
+            final File file2 = fc.showOpenDialog(null);
+            if(file2 != null){
+                this.showMessage(this.readerFile(file2.getAbsolutePath()), "Результаты для теста " + file1.getName()+"\nТестируемый: "+file2.getName(), "Результаты");
             }
-            this.showMessage(this.readerFile(f.getAbsolutePath()), "Результаты для теста\n" + file1.getName(), "Результаты");
         }
     }
-    @FXML
+    public void resultsDeleteItem(){
+        if("тестирование".equals(l2.getText())){
+            alertWindow("", "Удаление результатов недоступно в режиме тестирования", "Сообщение");
+            return;
+        }
+        final DirectoryChooser dc = new DirectoryChooser();
+        dc.setTitle("Удаление результатов");
+        dc.setInitialDirectory(directoryTests);
+        final File file1 = dc.showDialog(null);
+        if (file1 != null) {
+            final FileChooser fc = new FileChooser();
+            fc.setTitle("Выбор файла для удаления");
+            fc.setInitialDirectory(new File(file1+System.getProperty(separator)+"результаты"));
+            final File file2 = fc.showOpenDialog(null);
+            if(file2 != null){
+                final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setResizable(true);
+                alert.setTitle("Вопрос");
+                alert.setHeaderText("");
+                alert.setContentText("Удалить файл результата для теста " + file1.getName() + "?\nТестируемый: "+file2.getName());
+                final Optional<ButtonType> resultAlert = alert.showAndWait();
+                if (resultAlert.get() == ButtonType.OK) {
+                      if(file2.delete()){
+                          toast.setMessage("Файл удален");
+                   }
+                }
+            }
+        }
+    }
     public void exitItem() {
         final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("ВЫХОД");
@@ -289,14 +344,13 @@ public class Controller implements Initializable
         }
     }
 
-    @FXML
-    private void instructionItem() {
+    public void instructionItem() {
         this.showMessage(this.readerInstruction(), "", "Инструкция");
     }
     private boolean isEmpty(String s){
         return s == null || s.trim().length() == 0;
     }
-    
+
     private static void deleteDirectory(File dir) {
         if (dir.isDirectory()) {
             String[] children = dir.list();
@@ -347,6 +401,7 @@ public class Controller implements Initializable
 
     private void alertWindow(final String s, final String s2, final String str) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setResizable(true);
         alert.setTitle(str);
         alert.setHeaderText(s);
         alert.setContentText(s2);
@@ -474,6 +529,7 @@ public class Controller implements Initializable
     }
     private void showMessage(final String s, final String s1, final String s2) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setResizable(true);
         alert.setTitle(s2);
         alert.setHeaderText(s1);
         final TextArea ta = new TextArea(s);
