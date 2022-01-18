@@ -25,12 +25,13 @@
             <MenuItem mnemonicParsing="false" onAction="#deleteItem" text="Удалить" />
         </Menu>
         <Menu mnemonicParsing="false" text="Справка">
-            <MenuItem mnemonicParsing="false" onAction="#programmInfoItem" text="О программе" />
-            <MenuItem mnemonicParsing="false" onAction="#autorInfoItem" text="Об авторе" />
+            <MenuItem mnemonicParsing="false" onAction="#programInfoItem" text="О программе" />
+            <MenuItem mnemonicParsing="false" onAction="#authorInfoItem" text="Об авторе" />
             <MenuItem mnemonicParsing="false" onAction="#instructionItem" text="Инструкция" />
         </Menu>
         <Menu mnemonicParsing="false" text="Результаты">
             <MenuItem mnemonicParsing="false" onAction="#resultsOpenItem" text="Просмотр результатов" />
+            <MenuItem mnemonicParsing="false" onAction="#resultsDeleteItem" text="Удаление результатов" />
             <MenuItem mnemonicParsing="false" onAction="#exitItem" text="Выход" />
         </Menu>
     </MenuBar>
