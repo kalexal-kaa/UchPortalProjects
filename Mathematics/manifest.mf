@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+X-COMMENT: Main-Class will be added automatically by build
+SplashScreen-Image: images/splash.png
+Main-Class: sample.Splash
+
