@@ -189,9 +189,9 @@ public class Controller implements Initializable {
             }else {
                 userName=name.get();
             }
-            this.recordInHistory("регистрация решающего\nимя: " + userName + " ("+actionTime()+")");
+            this.recordInHistory("регистрация решающего\nимя: " + userName + " ("+dayDateAndTime()+")");
         }else {
-            this.recordInHistory("регистрация решающего\nрегистрация отменена ("+actionTime()+")");
+            this.recordInHistory("регистрация решающего\nрегистрация отменена ("+dayDateAndTime()+")");
         }
         this.tf.requestFocus();
         this.bal = 0;
@@ -261,6 +261,7 @@ public class Controller implements Initializable {
         File historyFile = fc.showOpenDialog(null);
         if (historyFile != null) {
             final Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setResizable(true);
             alert.setTitle("История");
             alert.setHeaderText("Просмотр Истории\n"+historyFile.getName());
             final TextArea ta = new TextArea(readerHistory(historyFile.getPath()));
@@ -340,7 +341,7 @@ public class Controller implements Initializable {
         alert.setTitle("Результаты");
         alert.setHeaderText("Предварительные Результаты");
         alert.setContentText("На данный момент было заданий: " + (this.y + this.f));
-        final Label l = new Label("Подробнее:");
+        final Label l1 = new Label("Подробнее:");
         final TextArea ta = new TextArea("Верных ответов: " + this.y + "\nНевыполнено заданий: " + this.f + "\nПроцент верных ответов: " + 100 * this.y / (this.y + this.f) + "%\nПредварительная оценка: " + this.bal);
         ta.setEditable(false);
         ta.setWrapText(true);
@@ -350,7 +351,7 @@ public class Controller implements Initializable {
         GridPane.setHgrow(ta, Priority.ALWAYS);
         final GridPane gp = new GridPane();
         gp.setMaxWidth(Double.MAX_VALUE);
-        gp.add( l, 0, 0);
+        gp.add( l1, 0, 0);
         gp.add( ta, 0, 1);
         alert.getDialogPane().setExpandableContent(gp);
         alert.showAndWait();
@@ -362,7 +363,7 @@ public class Controller implements Initializable {
     }
     @FXML
     private void programInfo(){
-        alertWindow("","Название: Математика\nВерсия: 6.0","О Программе");
+        alertWindow("","Название: Математика\nВерсия: 7.0","О Программе");
     }
     @FXML
     private void cleanHistory(){
@@ -372,6 +373,7 @@ public class Controller implements Initializable {
         File historyFile = fc.showOpenDialog(null);
         if (historyFile != null) {
         final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setResizable(true);
         alert.setTitle("Очищение истории");
         alert.setHeaderText("Очистить историю?");
         alert.setContentText("Вы действительно хотите очистить эту историю?\nИмя файла истории: "+historyFile.getName());
@@ -395,6 +397,7 @@ public class Controller implements Initializable {
         File historyFile = fc.showOpenDialog(null);
         if (historyFile != null) {
             final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setResizable(true);
             alert.setTitle("Удаление файла истории");
             alert.setHeaderText("Удалить файл истории?");
             alert.setContentText("Вы действительно хотите удалить этот файл истории?\nИмя файла истории: "+historyFile.getName());
@@ -409,14 +412,14 @@ public class Controller implements Initializable {
         }
     }
     private String readerHistory(final String p) {
-        StringBuilder f = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         try {
             final File file = new File(p);
             final FileReader fr = new FileReader(file);
             try (final BufferedReader br = new BufferedReader(fr)) {
                 String str;
                 while ((str = br.readLine()) != null) {
-                    f.append(str).append("\n");
+                    sb.append(str).append("\n");
                 }
                 fr.close();
             }
@@ -424,7 +427,7 @@ public class Controller implements Initializable {
         catch (IOException e) {
             e.getMessage();
         }
-        return f.toString();
+        return sb.toString();
     }
     private boolean isEmpty(String s){
         return s == null || s.trim().length() == 0;
@@ -482,25 +485,26 @@ public class Controller implements Initializable {
     private void showBal() {
         final int percent = 100 * this.y / (this.y + this.f);
         if (percent >= 0 && percent <= 20) {
-            this.showImage("images/one.png");
+            this.showImage("images/1.png");
             this.bal = 1;
         } else if (percent > 20 && percent <= 40) {
-            this.showImage("images/two.png");
+            this.showImage("images/2.png");
             this.bal = 2;
         } else if (percent > 40 && percent <= 60) {
-            this.showImage("images/free.png");
+            this.showImage("images/3.png");
             this.bal = 3;
         } else if (percent > 60 && percent <= 80) {
-            this.showImage("images/fo.png");
+            this.showImage("images/4.png");
             this.bal = 4;
         } else {
-            this.showImage("images/fife.png");
+            this.showImage("images/5.png");
             this.bal = 5;
         }
     }
 
     private void alertWindow(final String s, final String s2, final String str) {
         final Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setResizable(true);
         alert.setTitle(str);
         alert.setHeaderText(s);
         alert.setContentText(s2);

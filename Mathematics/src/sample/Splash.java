@@ -1,26 +1,47 @@
 package sample;
 
+import java.awt.SplashScreen;
 import javafx.application.Application;
+import javafx.stage.Stage;
 
-import java.awt.*;
-
-public class Splash {
+public class Splash extends Application {
 
     public Splash() {
+
         super();
+
     }
 
     public static void main(final String[] args) {
-        SplashScreen splash = SplashScreen.getSplashScreen();
+
+        SplashScreen mySplash = SplashScreen.getSplashScreen();
+
         try {
-            Thread.sleep(5000L);
-        }
-        catch (InterruptedException ex) {
+
+            Thread.sleep(3000L);
+
+        } catch (InterruptedException ex) {
+
             ex.getMessage();
+
         }
-        if (splash != null) {
-            splash.close();
+
+        if (mySplash != null) {
+
+            mySplash.close();
+
             Application.launch(Main.class, args);
+
         }
+
     }
+
+    @Override
+
+    public void start(Stage primaryStage) throws Exception {
+
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+
 }

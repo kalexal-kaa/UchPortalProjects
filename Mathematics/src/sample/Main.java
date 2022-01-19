@@ -18,7 +18,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/style.css")).toExternalForm());
         primaryStage.setTitle("Математика");
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("images/imagemathic.png"))));
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("images/imagemath.png"))));
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest((WindowEvent we) -> {
