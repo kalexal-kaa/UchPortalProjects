@@ -185,21 +185,32 @@ public class Controller implements Initializable {
         final Optional<String> name = dialog.showAndWait();
         if (name.isPresent()) {
             if (isEmpty(name.get())){
-                userName="anonym";
+                final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Регистрация");
+                alert.setHeaderText("");
+                alert.setContentText("Зарегистрировать вас под именем anonym?");
+                final Optional<ButtonType> resultAlert =  alert.showAndWait();
+                if (resultAlert.get() == ButtonType.OK) {
+                    userName="anonym";
+                }else{
+                    return;
+                }
             }else {
                 userName=name.get();
             }
+            toast.setMessage("Имя: "+userName);
             this.recordInHistory("регистрация решающего\nимя: " + userName + " ("+dayDateAndTime()+")");
+            this.tf.requestFocus();
+            this.bal = 0;
+            this.y = 0;
+            this.f = 0;
+            this.l = "";
+            this.image.setImage(null);
+            this.image.setDisable(true);
         }else {
+            toast.setMessage("регистрация отменена");
             this.recordInHistory("регистрация решающего\nрегистрация отменена ("+dayDateAndTime()+")");
         }
-        this.tf.requestFocus();
-        this.bal = 0;
-        this.y = 0;
-        this.f = 0;
-        this.l = "";
-        this.image.setImage(null);
-        this.image.setDisable(true);
     }
 
     @FXML
@@ -363,7 +374,7 @@ public class Controller implements Initializable {
     }
     @FXML
     private void programInfo(){
-        alertWindow("","Название: Математика\nВерсия: 7.0","О Программе");
+        alertWindow("","Название: Математика\nВерсия: 8.0","О Программе");
     }
     @FXML
     private void cleanHistory(){
